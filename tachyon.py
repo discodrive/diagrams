@@ -1,6 +1,5 @@
 from diagrams import Cluster, Diagram
 from diagrams.custom import Custom
-from diagrams.aws.database import Aurora
 from diagrams.aws.network import CloudFront
 from diagrams.aws.security import ACM
 from diagrams.aws.storage import S3
