@@ -14,15 +14,15 @@ with Diagram("Tachyon", show=False):
     api = APIGateway("REST API")
 
     with Cluster("Image Processing"):
-        image_proc = [Lambda("Tachyon Lambda"),
-                      S3("S3 Media storage"),
-                      CloudFront("CloudFront\nCaching and CDN")]
+        tachyon = Lambda("Tachyon Lambda")
+        bucket = S3("S3 Media storage") - Edge(color="brown", style="dotted") - CloudFront("CloudFront\nCaching and CDN")
 
     with Cluster("IAM"):
         iam = IAM("Tachyon IAM user")
         iam - Edge(color="brown", style="dotted") - IAMRole("Role and policy for\ninteracting with S3")
 
-    wordpress >> Edge(color="firebrick") << image_proc
-    cert >> image_proc
-    image_proc >> Edge(color="firebrick") << api
-    image_proc >> Edge(color="darkgreen") << iam
+    wordpress >> Edge(color="brown") << bucket
+    cert >> bucket
+    tachyon >> Edge(color="brown") << bucket
+    tachyon >> Edge(color="brown") << api
+    tachyon >> Edge(color="brown") << iam
